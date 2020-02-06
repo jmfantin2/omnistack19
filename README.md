@@ -23,3 +23,11 @@ cd frontend
 yarn
 yarn start
 ```
+
+If you want to run the mobile app, open one more terminal tab.
+```
+cd mobile
+yarn
+yarn start
+```
+Expo will prompt and you may run it in a virtual device or your own smartphone.
