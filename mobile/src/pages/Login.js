@@ -1,17 +1,35 @@
-import React, {useState, setState} from  'react';
-import {KeyboardAvoidingView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet} from 'react-native'
+import React, {useState, useEffect} from  'react';
+import {KeyboardAvoidingView, AsyncStorage, View, Text, TextInput, Image, TouchableOpacity, StyleSheet} from 'react-native'
 
 import api from '../services/api';
 
 import logo from '../assets/logo.png'
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [techs, setTechs] = useState('');
-
+  /*
+  useEffect(() => {
+    AsyncStorage.getItem('user').then(user => {
+      if (user){
+        navigation.navigate('List');
+      }
+    });
+  }, []);
+  // deps array is empty [] means that it only runs one time
+  */
   async function handleSubmit(){
-    console.log(email);
-    console.log(techs);
+    const response = await api.post('/sessions',{
+      email
+    });
+    const { _id } = response.data;
+
+    console.log("[SESSION CREATED] \nemail: ", email, "\ntechs: ", techs, "\n_id: ", _id);
+
+    await AsyncStorage.setItem('user', _id);
+    await AsyncStorage.setItem('techs', techs);
+
+    navigation.navigate('List');
   }
 
   return (
@@ -36,6 +54,7 @@ export default function Login() {
           style={styles.input}
           placeholder="Separe-as por vírgulas"
           placeholderTextColor="#999"
+          autoCorrect={false}
           value={techs}
           onChangeText={setTechs}
         />
@@ -58,8 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: '40%',
-    height: '40%',
+    height: 80,
     resizeMode: "contain"
   },
   form: {
