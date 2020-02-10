@@ -8,7 +8,7 @@ import logo from '../assets/logo.png'
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [techs, setTechs] = useState('');
-  /*
+
   useEffect(() => {
     AsyncStorage.getItem('user').then(user => {
       if (user){
@@ -16,8 +16,9 @@ export default function Login({ navigation }) {
       }
     });
   }, []);
+
   // deps array is empty [] means that it only runs one time
-  */
+
   async function handleSubmit(){
     const response = await api.post('/sessions',{
       email
