@@ -31,3 +31,5 @@ yarn
 yarn start
 ```
 Expo will prompt and you may run it in a virtual device or your own smartphone.
+
+Please note that the Expo IP address must be updated in `mobile/src/services/api.js`
